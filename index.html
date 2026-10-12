@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Desarrolladores — Reglamento y Roles</title>
+<meta name="description" content="Reglamento oficial, Rol Cliente y DEV Verificado de la comunidad Desarrolladores." />
+<link rel="icon" href="logo.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#060b09;
+    --bg-2:#0a130f;
+    --panel:rgba(15,26,21,.72);
+    --panel-solid:#0e1a15;
+    --line:rgba(34,197,94,.16);
+    --line-strong:rgba(34,197,94,.4);
+    --green:#22c55e;
+    --green-2:#16a34a;
+    --green-3:#4ade80;
+    --mint:#86efac;
+    --text:#e9f7ef;
+    --muted:#93b4a5;
+    --muted-2:#6f8f81;
+    --glow:rgba(34,197,94,.35);
+    --radius:18px;
+    --maxw:1180px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;scroll-padding-top:90px}
+  body{
+    font-family:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  body::before{
+    content:"";
+    position:fixed;inset:0;
+    background:url('banner.jpg') center/cover no-repeat;
+    opacity:.10;
+    filter:saturate(.7);
+    z-index:-2;
+  }
+  body::after{
+    content:"";
+    position:fixed;inset:0;
+    background:
+      radial-gradient(900px 500px at 80% -10%, rgba(34,197,94,.14), transparent 60%),
+      radial-gradient(700px 500px at -10% 20%, rgba(22,163,74,.12), transparent 55%),
+      linear-gradient(180deg,#060b09 0%,#08100c 45%,#060b09 100%);
+    z-index:-1;
+    pointer-events:none;
+  }
+  ::selection{background:var(--green);color:#04140b}
+
+  /* ---------- NAV ---------- */
+  header.nav{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:20px;
+    padding:14px clamp(16px,4vw,48px);
+    background:rgba(6,11,9,.55);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    border-bottom:1px solid transparent;
+    transition:.35s ease;
+  }
+  header.nav.scrolled{
+    background:rgba(6,11,9,.9);
+    border-bottom:1px solid var(--line);
+    box-shadow:0 10px 40px -20px var(--glow);
+  }
+  .brand{display:flex;align-items:center;gap:12px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.15rem;letter-spacing:.2px}
+  .brand img{width:40px;height:40px;border-radius:12px;object-fit:cover;border:1px solid var(--line-strong);box-shadow:0 0 22px -6px var(--glow)}
+  .brand span b{color:var(--green-3)}
+  nav.links{display:flex;gap:6px;align-items:center}
+  nav.links a{
+    color:var(--muted);text-decoration:none;font-size:.9rem;font-weight:500;
+    padding:9px 14px;border-radius:10px;transition:.22s;white-space:nowrap;
+  }
+  nav.links a:hover{color:var(--text);background:rgba(34,197,94,.09)}
+  nav.links a.active{color:var(--green-3);background:rgba(34,197,94,.13)}
+  .nav-toggle{display:none;background:none;border:1px solid var(--line);color:var(--text);border-radius:10px;padding:8px 12px;font-size:1.1rem;cursor:pointer}
+  @media(max-width:820px){
+    nav.links{
+      position:absolute;top:100%;right:clamp(16px,4vw,48px);
+      flex-direction:column;align-items:stretch;gap:4px;
+      background:rgba(8,15,12,.98);border:1px solid var(--line);
+      border-radius:14px;padding:10px;min-width:210px;
+      box-shadow:0 24px 60px -30px #000;
+      opacity:0;visibility:hidden;transform:translateY(-8px);transition:.25s;
+    }
+    nav.links.open{opacity:1;visibility:visible;transform:translateY(0)}
+    .nav-toggle{display:block}
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    min-height:100svh;
+    display:flex;flex-direction:column;justify-content:center;align-items:center;
+    text-align:center;
+    padding:140px clamp(16px,5vw,48px) 90px;
+    isolation:isolate;
+  }
+  .hero-bg{
+    position:absolute;inset:0;z-index:-1;
+    background:url('banner.jpg') center 30%/cover no-repeat;
+    transform:scale(1.04);
+  }
+  .hero-bg::after{
+    content:"";position:absolute;inset:0;
+    background:
+      linear-gradient(180deg, rgba(6,11,9,.72) 0%, rgba(6,11,9,.62) 40%, rgba(6,11,9,.95) 100%),
+      radial-gradient(700px 420px at 50% 15%, rgba(34,197,94,.28), transparent 65%);
+  }
+  .hero-badge{
+    display:inline-flex;align-items:center;gap:9px;
+    font-size:.8rem;letter-spacing:2.5px;text-transform:uppercase;font-weight:600;
+    color:var(--mint);
+    padding:8px 16px;border-radius:999px;
+    border:1px solid var(--line-strong);
+    background:rgba(34,197,94,.08);
+    backdrop-filter:blur(6px);
+    margin-bottom:26px;
+  }
+  .hero-badge i{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 12px var(--green);animation:pulse 2.2s infinite}
+  @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.45;transform:scale(.7)}}
+  .hero h1{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:clamp(2.6rem,8vw,5.6rem);
+    line-height:1.02;font-weight:700;letter-spacing:-1.5px;
+    text-transform:uppercase;
+    margin-bottom:18px;
+  }
+  .hero h1 .grad{
+    background:linear-gradient(100deg,var(--green-3),var(--green),#0e9f6e);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 0 34px rgba(34,197,94,.35));
+  }
+  .hero p.lead{max-width:640px;color:#cfe7db;font-size:clamp(1rem,2.4vw,1.18rem);margin-bottom:34px}
+  .hero-cta{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+  .btn{
+    display:inline-flex;align-items:center;gap:9px;
+    padding:14px 26px;border-radius:12px;font-weight:600;font-size:.95rem;
+    text-decoration:none;cursor:pointer;border:1px solid transparent;transition:.25s ease;
+  }
+  .btn-primary{
+    background:linear-gradient(180deg,var(--green),var(--green-2));
+    color:#04140b;box-shadow:0 14px 34px -12px var(--glow);
+  }
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 20px 44px -12px var(--glow)}
+  .btn-ghost{color:var(--text);border-color:var(--line-strong);background:rgba(34,197,94,.05)}
+  .btn-ghost:hover{background:rgba(34,197,94,.13);transform:translateY(-2px)}
+  .hero-stats{
+    display:flex;gap:clamp(20px,5vw,60px);flex-wrap:wrap;justify-content:center;
+    margin-top:60px;padding-top:34px;border-top:1px solid var(--line);
+  }
+  .hero-stat{text-align:center}
+  .hero-stat b{display:block;font-family:'Space Grotesk',sans-serif;font-size:1.9rem;color:var(--green-3)}
+  .hero-stat span{font-size:.78rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted-2)}
+  .scroll-hint{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);color:var(--muted-2);font-size:1.4rem;animation:floaty 2s ease-in-out infinite}
+  @keyframes floaty{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,9px)}}
+
+  /* ---------- LAYOUT ---------- */
+  main{position:relative;z-index:1}
+  section.block{padding:clamp(60px,9vw,110px) clamp(16px,5vw,48px)}
+  .wrap{max-width:var(--maxw);margin:0 auto}
+  .section-head{max-width:760px;margin-bottom:46px}
+  .kicker{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:.76rem;letter-spacing:2.5px;text-transform:uppercase;font-weight:700;
+    color:var(--green-3);margin-bottom:14px;
+  }
+  .kicker::before{content:"";width:26px;height:2px;background:var(--green);border-radius:2px}
+  .section-head h2{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:clamp(1.8rem,4.4vw,2.7rem);line-height:1.1;letter-spacing:-.6px;
+  }
+  .section-head p{color:var(--muted);margin-top:14px;font-size:1.02rem}
+  .divider{height:1px;background:linear-gradient(90deg,transparent,var(--line-strong),transparent);margin:0 clamp(16px,5vw,48px)}
+
+  /* ---------- INTRO CARD ---------- */
+  .intro-card{
+    position:relative;
+    display:flex;gap:18px;align-items:flex-start;
+    background:linear-gradient(180deg,rgba(34,197,94,.10),rgba(34,197,94,.02));
+    border:1px solid var(--line-strong);
+    border-radius:var(--radius);
+    padding:24px 26px;margin-bottom:40px;
+    box-shadow:0 30px 70px -50px var(--glow);
+  }
+  .intro-card .ic{
+    flex:none;width:46px;height:46px;border-radius:12px;display:grid;place-items:center;
+    background:rgba(34,197,94,.14);border:1px solid var(--line-strong);font-size:1.3rem;
+  }
+  .intro-card p{color:#d5ecdf}
+  .intro-card strong{color:var(--green-3)}
+
+  /* ---------- RULE GRID ---------- */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:18px}
+  .card{
+    position:relative;
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:26px 24px 24px;
+    backdrop-filter:blur(8px);
+    transition:.3s ease;
+    overflow:hidden;
+  }
+  .card::before{
+    content:"";position:absolute;top:0;left:0;right:0;height:2px;
+    background:linear-gradient(90deg,transparent,var(--green),transparent);
+    opacity:0;transition:.3s;
+  }
+  .card:hover{transform:translateY(-4px);border-color:var(--line-strong);box-shadow:0 30px 60px -40px var(--glow)}
+  .card:hover::before{opacity:1}
+  .card .num{
+    position:absolute;top:18px;right:20px;
+    font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.05rem;
+    color:var(--green);
+    opacity:.5;letter-spacing:1px;
+  }
+  .card .num::before{content:"#" }
+  .card .emoji{font-size:1.7rem;display:block;margin-bottom:12px;filter:saturate(1.1)}
+  .card h3{font-family:'Space Grotesk',sans-serif;font-size:1.16rem;line-height:1.3;margin-bottom:10px;padding-right:44px;color:#eafbf1}
+  .card p{color:var(--muted);font-size:.95rem}
+  .card ul{list-style:none;margin-top:14px;display:flex;flex-direction:column;gap:9px}
+  .card ul li{position:relative;padding-left:24px;color:#bcd8cb;font-size:.93rem}
+  .card ul li::before{
+    content:"";position:absolute;left:2px;top:.62em;
+    width:8px;height:8px;border-radius:2px;
+    background:linear-gradient(135deg,var(--green-3),var(--green-2));
+    box-shadow:0 0 10px -2px var(--glow);
+    transform:rotate(45deg);
+  }
+  .card.alert{border-color:rgba(250,204,21,.35);background:linear-gradient(180deg,rgba(250,204,21,.08),var(--panel))}
+  .card.alert .emoji{filter:none}
+  .emoji-img{height:1.15em;width:auto;vertical-align:-.2em;display:inline-block}
+
+  /* ---------- PRICING (Rol Cliente) ---------- */
+  .pricing{
+    display:grid;grid-template-columns:1.1fr 1fr;gap:22px;align-items:stretch;margin-bottom:40px;
+  }
+  @media(max-width:860px){.pricing{grid-template-columns:1fr}}
+  .price-card{
+    position:relative;
+    background:
+      radial-gradient(500px 260px at 80% -20%, rgba(34,197,94,.25), transparent 60%),
+      linear-gradient(180deg,#0f2018,#0a1712);
+    border:1px solid var(--line-strong);
+    border-radius:22px;padding:36px 34px;
+    box-shadow:0 40px 90px -60px var(--glow), inset 0 1px 0 rgba(255,255,255,.04);
+    display:flex;flex-direction:column;justify-content:center;
+  }
+  .price-card .tag{
+    align-self:flex-start;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;font-weight:700;
+    color:#04140b;background:linear-gradient(180deg,var(--green-3),var(--green-2));
+    padding:6px 12px;border-radius:999px;margin-bottom:18px;
+  }
+  .price-card .amount{font-family:'Space Grotesk',sans-serif;font-size:clamp(3rem,9vw,4.4rem);line-height:1;font-weight:700;letter-spacing:-2px}
+  .price-card .amount span{font-size:1.1rem;color:var(--muted);font-weight:500;letter-spacing:0}
+  .price-card .once{color:var(--mint);font-weight:600;margin-top:8px}
+  .price-card .pay{margin-top:22px;padding-top:20px;border-top:1px solid var(--line);color:var(--muted);font-size:.92rem;display:flex;flex-direction:column;gap:9px}
+  .price-card .pay strong{color:var(--text)}
+  .feat-list{display:flex;flex-direction:column;gap:12px;justify-content:center}
+  .feat{
+    display:flex;align-items:center;gap:14px;
+    background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px;
+    transition:.25s;
+  }
+  .feat:hover{border-color:var(--line-strong);transform:translateX(4px);background:rgba(34,197,94,.07)}
+  .feat .chk{
+    flex:none;width:30px;height:30px;border-radius:9px;display:grid;place-items:center;
+    background:rgba(34,197,94,.14);border:1px solid var(--line-strong);color:var(--green-3);font-size:.9rem;font-weight:700;
+  }
+  .feat span{color:#d7ecdf;font-size:.96rem}
+
+  /* ---------- IMPORTANT NOTE ---------- */
+  .note{
+    display:flex;gap:18px;align-items:flex-start;
+    margin-top:30px;padding:26px 28px;border-radius:var(--radius);
+    background:linear-gradient(180deg,rgba(250,204,21,.10),rgba(250,204,21,.03));
+    border:1px solid rgba(250,204,21,.35);
+  }
+  .note .ic{flex:none;font-size:1.5rem}
+  .note h3{font-family:'Space Grotesk',sans-serif;margin-bottom:8px;color:#fde68a;font-size:1.1rem}
+  .note p{color:#e7ddc6}
+
+  /* ---------- STEPS ---------- */
+  .steps{display:flex;flex-direction:column;gap:16px}
+  .step{
+    display:flex;gap:20px;align-items:flex-start;
+    background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+    padding:24px 26px;transition:.3s;
+  }
+  .step:hover{border-color:var(--line-strong);box-shadow:0 30px 60px -50px var(--glow)}
+  .step .snum{
+    flex:none;width:52px;height:52px;border-radius:14px;display:grid;place-items:center;
+    font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.05rem;color:var(--green-3);
+    background:rgba(34,197,94,.12);border:1px solid var(--line-strong);
+  }
+  .step .body h3{font-family:'Space Grotesk',sans-serif;font-size:1.16rem;margin-bottom:8px;display:flex;align-items:center;gap:9px}
+  .step .body p{color:var(--muted);font-size:.96rem}
+  .step .body ul{list-style:none;margin-top:12px;display:flex;flex-direction:column;gap:9px}
+  .step .body ul li{position:relative;padding-left:24px;color:#bcd8cb;font-size:.94rem}
+  .step .body ul li::before{content:"";position:absolute;left:2px;top:.6em;width:8px;height:8px;border-radius:2px;background:linear-gradient(135deg,var(--green-3),var(--green-2));transform:rotate(45deg)}
+  .step .body ul li b{color:var(--mint);font-weight:600}
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    position:relative;z-index:1;
+    padding:56px clamp(16px,5vw,48px) 40px;
+    border-top:1px solid var(--line);
+    background:linear-gradient(180deg,transparent,rgba(34,197,94,.05));
+    text-align:center;
+  }
+  footer .fbrand{display:inline-flex;align-items:center;gap:12px;margin-bottom:16px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.15rem}
+  footer .fbrand img{width:38px;height:38px;border-radius:11px;border:1px solid var(--line-strong)}
+  footer p{color:var(--muted-2);font-size:.85rem}
+  footer .fnote{margin-top:8px;font-size:.78rem;color:#567065}
+
+  /* ---------- ABOUT ---------- */
+  .about-grid{display:grid;grid-template-columns:1.25fr .9fr;gap:26px;align-items:center;margin-top:10px}
+  @media(max-width:900px){.about-grid{grid-template-columns:1fr}}
+  .about-text p{color:var(--muted);margin-bottom:14px}
+  .about-text p strong{color:var(--green-3)}
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+  .chip{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:999px;border:1px solid var(--line);background:rgba(34,197,94,.06);color:#cfe7db;font-size:.85rem;font-weight:500;transition:.25s}
+  .chip:hover{border-color:var(--line-strong);background:rgba(34,197,94,.12)}
+  .mission{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:28px;backdrop-filter:blur(8px)}
+  .mission h3{font-family:'Space Grotesk',sans-serif;font-size:1.15rem;margin-bottom:18px;display:flex;gap:10px;align-items:center}
+  .mission ul{list-style:none;display:flex;flex-direction:column;gap:15px}
+  .mission li{display:flex;gap:13px;align-items:flex-start;color:#cfe7db;font-size:.94rem}
+  .mission li .mk{flex:none;width:32px;height:32px;border-radius:9px;display:grid;place-items:center;background:rgba(34,197,94,.13);border:1px solid var(--line-strong);font-size:.9rem}
+
+  /* ---------- SERVICES ---------- */
+  .svc{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:28px 26px;backdrop-filter:blur(8px);transition:.3s;overflow:hidden}
+  .svc:hover{transform:translateY(-4px);border-color:var(--line-strong);box-shadow:0 30px 60px -40px var(--glow)}
+  .svc .ic{width:54px;height:54px;border-radius:15px;display:grid;place-items:center;font-size:1.5rem;background:linear-gradient(180deg,rgba(34,197,94,.2),rgba(34,197,94,.06));border:1px solid var(--line-strong);margin-bottom:16px}
+  .svc h3{font-family:'Space Grotesk',sans-serif;font-size:1.15rem;margin-bottom:9px;color:#eafbf1}
+  .svc p{color:var(--muted);font-size:.94rem}
+
+  /* ---------- FAQ ---------- */
+  .faq{display:flex;flex-direction:column;gap:12px;max-width:900px;margin:0 auto}
+  .faq details{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden;transition:.3s}
+  .faq details[open]{border-color:var(--line-strong);box-shadow:0 30px 60px -50px var(--glow)}
+  .faq summary{list-style:none;cursor:pointer;padding:20px 24px;font-weight:600;display:flex;justify-content:space-between;align-items:center;gap:16px;color:#eafbf1}
+  .faq summary::-webkit-details-marker{display:none}
+  .faq summary .plus{flex:none;width:28px;height:28px;border-radius:9px;display:grid;place-items:center;background:rgba(34,197,94,.12);border:1px solid var(--line-strong);color:var(--green-3);transition:.3s;font-size:1.1rem;line-height:1}
+  .faq details[open] summary .plus{transform:rotate(45deg)}
+  .faq .ans{padding:0 24px 22px;color:var(--muted);font-size:.95rem}
+
+  /* ---------- CTA ---------- */
+  .cta{position:relative;overflow:hidden;text-align:center;border-radius:24px;padding:clamp(40px,7vw,72px) clamp(20px,5vw,48px);background:radial-gradient(600px 300px at 50% 0%, rgba(34,197,94,.3), transparent 65%), linear-gradient(180deg,#0f2018,#0a1712);border:1px solid var(--line-strong);box-shadow:0 50px 100px -70px var(--glow)}
+  .cta h2{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.7rem,4vw,2.6rem);margin-bottom:14px}
+  .cta p{color:#cfe7db;max-width:560px;margin:0 auto 30px}
+  .cta .hero-cta{justify-content:center}
+
+  /* ---------- FOOTER LINKS ---------- */
+  .flinks{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:18px 0 8px}
+  .flinks a{color:var(--muted);text-decoration:none;font-size:.9rem;padding:8px 14px;border-radius:10px;transition:.2s}
+  .flinks a:hover{color:var(--green-3);background:rgba(34,197,94,.09)}
+
+  /* ---------- REVEAL ---------- */
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s cubic-bezier(.16,1,.3,1)}
+  .reveal.in{opacity:1;transform:none}
+
+  /* ---------- BOTTOM BAR ---------- */
+  .to-top{
+    position:fixed;right:22px;bottom:22px;z-index:90;
+    width:46px;height:46px;border-radius:14px;display:grid;place-items:center;
+    background:linear-gradient(180deg,var(--green),var(--green-2));color:#04140b;
+    text-decoration:none;font-size:1.2rem;font-weight:700;
+    box-shadow:0 16px 34px -14px var(--glow);
+    opacity:0;visibility:hidden;transform:translateY(14px);transition:.3s;
+  }
+  .to-top.show{opacity:1;visibility:visible;transform:none}
+</style>
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <a class="brand" href="#inicio" style="text-decoration:none;color:inherit">
+    <img src="logo.png" alt="Logo Desarrolladores" onerror="this.style.display='none'" />
+    <span>Desarrollo<b>res</b></span>
+  </a>
+  <button class="nav-toggle" id="navToggle" aria-label="Menú">☰</button>
+  <nav class="links" id="navLinks">
+    <a href="#inicio" class="active">Inicio</a>
+    <a href="#sobre">Sobre</a>
+    <a href="#servicios">Servicios</a>
+    <a href="#reglamento">Reglamento</a>
+    <a href="#cliente">Cliente</a>
+    <a href="#dev">DEV</a>
+    <a href="#faq">FAQ</a>
+  </nav>
+</header>
+
+<section class="hero" id="inicio">
+  <div class="hero-bg"></div>
+  <span class="hero-badge"><i></i>Comunidad oficial · Normativa</span>
+  <h1>Desarrollo<span class="grad">res</span></h1>
+  <p class="lead">Comunidad y estudio de desarrollo especializado en recursos para Minecraft, webs y bots de Discord. Conoce qué hacemos, el reglamento y los roles de la comunidad.</p>
+  <div class="hero-cta">
+    <a class="btn btn-primary" href="#sobre">✨ Descubrir la comunidad</a>
+    <a class="btn btn-ghost" href="#reglamento">📜 Reglamento</a>
+    <a class="btn btn-ghost" href="#cliente">💎 Rol Cliente</a>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat"><b>11</b><span>Normas</span></div>
+    <div class="hero-stat"><b>2</b><span>Roles</span></div>
+    <div class="hero-stat"><b>100%</b><span>SFW</span></div>
+    <div class="hero-stat"><b>24/7</b><span>Soporte</span></div>
+  </div>
+  <div class="scroll-hint">⌄</div>
+</section>
+
+<main>
+  <!-- ================= SOBRE ================= -->
+  <section class="block" id="sobre">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="kicker">Quiénes somos</div>
+        <h2>¿Qué es Desarrolladores?</h2>
+        <p>Desarrolladores es una comunidad y estudio de desarrollo enfocado en crear recursos de calidad para Minecraft y otros proyectos, reuniendo a desarrolladores, creadores y jugadores en un mismo lugar.</p>
+      </div>
+      <div class="about-grid">
+        <div class="about-text reveal">
+          <p>Nacimos como un punto de encuentro para gente apasionada por el desarrollo: crear <strong>plugins</strong>, <strong>mapas</strong> y <strong>setups</strong> para Minecraft, así como <strong>webs</strong> y <strong>bots de Discord</strong> para comunidades.</p>
+          <p>Nuestro objetivo es compartir conocimiento, ofrecer recursos premium de calidad y mantener un entorno <strong>seguro, respetuoso y SFW</strong> donde aprender y colaborar.</p>
+          <div class="chips">
+            <span class="chip">🧩 Plugins</span>
+            <span class="chip">🗺️ Mapas</span>
+            <span class="chip">⚙️ Setups</span>
+            <span class="chip">🌐 Desarrollo web</span>
+            <span class="chip">🤖 Bots de Discord</span>
+            <span class="chip">🛠️ Soporte</span>
+          </div>
+        </div>
+        <div class="mission reveal">
+          <h3>🎯 Nuestra misión</h3>
+          <ul>
+            <li><span class="mk">💚</span><span>Crear una comunidad abierta, profesional y respetuosa.</span></li>
+            <li><span class="mk">📦</span><span>Ofrecer recursos premium y contenido actualizado.</span></li>
+            <li><span class="mk">🤝</span><span>Ayudar y dar reconocimiento a los desarrolladores.</span></li>
+            <li><span class="mk">🔒</span><span>Mantener un espacio seguro y libre de contenido NSFW.</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ================= SERVICIOS ================= -->
+  <section class="block" id="servicios">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="kicker">Qué hacemos</div>
+        <h2>¿Qué ofrece Desarrolladores?</h2>
+        <p>Recursos y servicios pensados para servidores, comunidades y proyectos de desarrollo.</p>
+      </div>
+      <div class="grid">
+        <article class="svc reveal"><div class="ic">🧩</div><h3>Plugins</h3><p>Plugins premium y personalizados para servidores de Minecraft, con soporte y actualizaciones.</p></article>
+        <article class="svc reveal"><div class="ic">🗺️</div><h3>Mapas</h3><p>Mapas profesionales: lobbies, minijuegos, survival y entornos listos para producción.</p></article>
+        <article class="svc reveal"><div class="ic">⚙️</div><h3>Setups</h3><p>Configuraciones completas de servidor, listas para usar y optimizadas.</p></article>
+        <article class="svc reveal"><div class="ic">🌐</div><h3>Desarrollo web</h3><p>Webs, paneles y tiendas para comunidades y servidores, con un diseño moderno.</p></article>
+        <article class="svc reveal"><div class="ic">🤖</div><h3>Bots de Discord</h3><p>Bots personalizados: moderación, tickets, bienvenidas y automatización.</p></article>
+        <article class="svc reveal"><div class="ic">🛠️</div><h3>Soporte</h3><p>Ayuda técnica básica para los recursos premium y su correcta utilización.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ================= UNIRTE ================= -->
+  <section class="block" id="unirse">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="kicker">Empieza aquí</div>
+        <h2>Cómo unirte a la comunidad</h2>
+        <p>Formar parte de Desarrolladores es gratis y solo lleva un minuto.</p>
+      </div>
+      <div class="steps">
+        <div class="step reveal"><div class="snum">01</div><div class="body"><h3>🚪 Únete al Discord</h3><p>Entra en el servidor con la invitación oficial de la comunidad.</p></div></div>
+        <div class="step reveal"><div class="snum">02</div><div class="body"><h3>📜 Lee el reglamento</h3><p>Revisa las normas de convivencia para mantener un buen ambiente.</p></div></div>
+        <div class="step reveal"><div class="snum">03</div><div class="body"><h3>💬 Preséntate y participa</h3><p>Preséntate, participa y, si cumples los requisitos, solicita el rol que te corresponda.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ================= REGLAMENTO ================= -->
+  <section class="block" id="reglamento">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="kicker">Normativa</div>
+        <h2>Reglamento de la comunidad</h2>
+        <p>Estas normas son de obligado cumplimiento para todos los miembros. Su incumplimiento podrá conllevar sanciones según la gravedad de la situación.</p>
+      </div>
+
+      <div class="intro-card reveal">
+        <div class="ic">📌</div>
+        <p><strong>Lee con atención.</strong> El desconocimiento del reglamento no exime de su cumplimiento. El Staff se reserva el derecho de aplicar sanciones proporcionales a cada caso.</p>
+      </div>
+
+      <div class="grid">
+        <article class="card reveal">
+          <span class="num">01</span>
+          <span class="emoji">🚫</span>
+          <h3>Publicidad</h3>
+          <p>No está permitido realizar publicidad de otros servidores de Discord.</p>
+          <ul>
+            <li>No envíes invitaciones mediante mensajes privados.</li>
+            <li>No compartas enlaces promocionales en canales públicos sin autorización del Staff.</li>
+          </ul>
+        </article>
+
+        <article class="card reveal">
+          <span class="num">02</span>
+          <span class="emoji">🤝</span>
+          <h3>Respeto y convivencia</h3>
+          <p>Mantén un comportamiento respetuoso con el resto de miembros y el equipo.</p>
+          <ul>
+            <li>No se permite el racismo, sexismo, discurso de odio o discriminación.</li>
+            <li>No se permite el acoso, las amenazas ni los insultos graves.</li>
+          </ul>
+        </article>
+
+        <article class="card reveal">
+          <span class="num">03</span>
+          <span class="emoji">🎁</span>
+          <h3>Solicitud de beneficios</h3>
+          <p>No solicites roles, permisos, recursos gratuitos u otros beneficios al Staff o a otros miembros.</p>
+        </article>
+
+        <article class="card reveal">
+          <span class="num">04</span>
+          <span class="emoji">🛠️</span>
+          <h3>Equipo de Staff</h3>
+          <p>Respeta las decisiones e indicaciones del equipo de moderación y administración.</p>
+          <ul>
+            <li>No provoques discusiones o conflictos con el Staff.</li>
+            <li>Si consideras que una decisión es incorrecta, utiliza los canales correspondientes para comunicarlo.</li>
+          </ul>
+        </article>
+
+        <article class="card reveal">
+          <span class="num">05</span>
+          <span class="emoji">🚫</span>
+          <h3>Spam y raids</h3>
+          <p>No está permitido utilizar la comunidad para realizar spam, raids o trolling.</p>
+          <ul>
+            <li>Evita el envío repetitivo de mensajes, emojis o comandos.</li>
+            <li>La organización o participación en raids será sancionada.</li>
+          </ul>
+        </article>
+
+        <article class="card reveal">
+          <span class="num">06</span>
+          <span class="emoji">🔞</span>
+          <h3>Contenido NSFW</h3>
+          <p>Desarrolladores es una comunidad SFW. La publicación, distribución o promoción de contenido NSFW conllevará la expulsión permanente del servidor.</p>
+        </article>
+
+        <article class="card reveal">
+          <span class="num">07</span>
+          <span class="emoji">🎤</span>
+          <h3>Uso de los canales de voz</h3>
+          <p>Mantén un uso adecuado de los canales de voz.</p>
+          <ul>
+            <li>No grites de forma intencionada.</li>
+            <li>No reproduzcas sonidos excesivamente altos o molestos.</li>
+            <li>No utilices sonidos para molestar deliberadamente a otros usuarios.</li>
+          </ul>
+        </article>
+
+        <article class="card reveal">
+          <span class="num">08</span>
+          <span class="emoji">🎭</span>
+          <h3>Suplantación de identidad</h3>
+          <p>Está prohibido hacerse pasar por otros miembros, integrantes del Staff o bots.</p>
+        </article>
+
+        <article class="card reveal">
+          <span class="num">09</span>
+          <span class="emoji">🎨</span>
+          <h3>Nombres y avatares</h3>
+          <p>Los nombres de usuario, apodos y avatares deben ser apropiados para la comunidad.</p>
+          <ul>
+            <li>No se permiten contenidos ofensivos, NSFW o destinados a provocar a otros miembros.</li>
+          </ul>
+        </article>
+
+        <article class="card reveal">
+          <span class="num">10</span>
+          <span class="emoji">🐸</span>
+          <h3>Hacks, exploits y cheats</h3>
+          <p>No está permitido promover hacks, exploits o cheats con fines maliciosos dentro de la comunidad o sus servicios.</p>
+        </article>
+
+        <article class="card reveal">
+          <span class="num">11</span>
+          <span class="emoji"><img class="emoji-img" src="https://cdn.discordapp.com/emojis/1531394664576581875.png" alt="Wumpus Developer" onerror="this.replaceWith('🧑‍💻')" /></span>
+          <h3>Términos de Discord</h3>
+          <p>Todos los miembros deben cumplir los Términos de Servicio y las Normas de la Comunidad de Discord.</p>
+          <ul>
+            <li>La edad mínima para utilizar Discord es de 13 años.</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ================= ROL CLIENTE ================= -->
+  <section class="block" id="cliente">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="kicker">Ventajas</div>
+        <h2>💎 Rol Cliente</h2>
+        <p>El Rol Cliente da acceso a recursos premium y a determinadas ventajas exclusivas dentro de Desarrolladores.</p>
+      </div>
+
+      <div class="pricing reveal">
+        <div class="price-card">
+          <span class="tag">Pago único</span>
+          <div class="amount">17,99 <span>€</span></div>
+          <div class="once">Acceso de por vida a todos los recursos premium</div>
+          <div class="pay">
+            <div><strong>Método de pago:</strong> PayPal como método preferente.</div>
+            <div>El Rol Cliente se asigna automáticamente una vez confirmado el pago.</div>
+            <div>No se realizan reembolsos.</div>
+          </div>
+        </div>
+
+        <div class="feat-list">
+          <div class="feat"><span class="chk">✓</span><span><b style="color:var(--mint)">Recursos premium:</b> Plugins, Mapas y Setups premium de Minecraft.</span></div>
+          <div class="feat"><span class="chk">✓</span><span>Soporte técnico básico gratuito.</span></div>
+          <div class="feat"><span class="chk">✓</span><span>Contenido actualizado.</span></div>
+          <div class="feat"><span class="chk">✓</span><span><b style="color:var(--mint)">Canales exclusivos:</b> acceso a canales privados solo para clientes.</span></div>
+          <div class="feat"><span class="chk">✓</span><span><b style="color:var(--mint)">Actualizaciones:</b> los recursos reciben mejoras y nuevas versiones.</span></div>
+        </div>
+      </div>
+
+      <div class="grid">
+        <article class="card reveal">
+          <span class="num">01</span>
+          <span class="emoji">📦</span>
+          <h3>Recursos premium</h3>
+          <p>Accede a recursos premium disponibles para clientes.</p>
+          <ul>
+            <li>Plugins premium de Minecraft</li>
+            <li>Mapas premium de Minecraft</li>
+            <li>Setups premium de Minecraft</li>
+            <li>Soporte técnico básico gratuito</li>
+            <li>Contenido actualizado</li>
+          </ul>
+        </article>
+        <article class="card reveal">
+          <span class="num">02</span>
+          <span class="emoji">🔒</span>
+          <h3>Canales exclusivos</h3>
+          <p>Acceso a canales privados exclusivos para clientes dentro de la comunidad.</p>
+        </article>
+        <article class="card reveal">
+          <span class="num">03</span>
+          <span class="emoji">🛠️</span>
+          <h3>Soporte básico</h3>
+          <p>Soporte básico relacionado con los recursos premium y las dudas que puedan surgir sobre su utilización.</p>
+        </article>
+        <article class="card reveal">
+          <span class="num">04</span>
+          <span class="emoji">♻️</span>
+          <h3>Actualizaciones</h3>
+          <p>Los recursos premium disponibles podrán recibir actualizaciones cuando existan nuevas versiones o mejoras.</p>
+        </article>
+        <article class="card reveal">
+          <span class="num">05</span>
+          <span class="emoji">💳</span>
+          <h3>Precio y pago</h3>
+          <p><strong style="color:var(--green-3)">17,99 € · Pago único</strong></p>
+          <ul>
+            <li>PayPal como método de pago preferente.</li>
+            <li>El Rol Cliente se asigna automáticamente una vez confirmado el pago.</li>
+            <li>No se realizan reembolsos.</li>
+          </ul>
+        </article>
+        <article class="card reveal alert">
+          <span class="num">06</span>
+          <span class="emoji">⚠️</span>
+          <h3>Condiciones</h3>
+          <p>Los recursos obtenidos mediante el Rol Cliente son exclusivamente para uso del cliente.</p>
+          <ul>
+            <li>No está permitido compartirlos.</li>
+            <li>No está permitido redistribuirlos.</li>
+            <li>No está permitido publicarlos o ponerlos a disposición de terceros.</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ================= DEV VERIFICADO ================= -->
+  <section class="block" id="dev">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="kicker">Reconocimiento</div>
+        <h2>🧑‍💻 DEV Verificado</h2>
+        <p>El rol DEV Verificado reconoce a miembros que cuentan con experiencia en desarrollo y destacan por sus conocimientos, proyectos y aportaciones a la comunidad.</p>
+      </div>
+
+      <div class="steps">
+        <div class="step reveal">
+          <div class="snum">01</div>
+          <div class="body">
+            <h3>📋 Requisitos</h3>
+            <p>Para solicitar el rol debes cumplir los siguientes requisitos:</p>
+            <ul>
+              <li>Mínimo 2 semanas en el servidor</li>
+              <li>Tener experiencia real en desarrollo</li>
+              <li>Mostrar profesionalidad y buena actitud</li>
+              <li>No contar con sanciones previas o acumular un historial negativo</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="step reveal">
+          <div class="snum">02</div>
+          <div class="body">
+            <h3>📝 Solicitud</h3>
+            <p>La solicitud se realiza mediante el formulario de postulación e incluye información sobre tu perfil como desarrollador.</p>
+            <ul>
+              <li><b>Presentación</b> — Breve descripción sobre ti</li>
+              <li><b>Lenguajes</b> — Lenguajes que dominas o utilizas habitualmente</li>
+              <li><b>Portafolio</b> — GitHub, proyectos u otros trabajos (opcional)</li>
+              <li><b>Proyectos</b> — Proyectos desarrollados y tu participación en ellos</li>
+              <li><b>Experiencia</b> — Información adicional que consideres relevante</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="step reveal">
+          <div class="snum">03</div>
+          <div class="body">
+            <h3>🔎 Valoración</h3>
+            <p>Cada solicitud será revisada individualmente teniendo en cuenta la experiencia, profesionalidad y trayectoria del solicitante.</p>
+            <ul>
+              <li>Las solicitudes con información insuficiente, poco esfuerzo o que no cumplan los requisitos podrán ser rechazadas.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="step reveal">
+          <div class="snum">04</div>
+          <div class="body">
+            <h3>💻 ¿Qué ofrece?</h3>
+            <p>El rol está pensado para dar reconocimiento y visibilidad a desarrolladores dentro de la comunidad.</p>
+            <ul>
+              <li>Acceso a canales exclusivos para desarrolladores verificados</li>
+              <li>Mayor visibilidad dentro de la comunidad</li>
+              <li>Reconocimiento como desarrollador verificado</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="note reveal">
+        <div class="ic">⚠️</div>
+        <div>
+          <h3>Importante</h3>
+          <p>Developer Verificado no es un rango del equipo ni proporciona funciones de soporte. Tampoco ofrece recompensas o ventajas económicas.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="divider"></div>
+
+  <!-- ================= FAQ ================= -->
+  <section class="block" id="faq">
+    <div class="wrap">
+      <div class="section-head reveal" style="text-align:center;margin-left:auto;margin-right:auto">
+        <div class="kicker" style="justify-content:center">Dudas</div>
+        <h2>Preguntas frecuentes</h2>
+      </div>
+      <div class="faq">
+        <details class="reveal"><summary>¿Unirme a la comunidad tiene coste?<span class="plus">+</span></summary><div class="ans">No. Unirse a Desarrolladores es totalmente gratis. El Rol Cliente es una ventaja opcional de pago único.</div></details>
+        <details class="reveal"><summary>¿Cómo consigo el Rol Cliente?<span class="plus">+</span></summary><div class="ans">Se adquiere con un pago único de 17,99 € (PayPal como método preferente) y se asigna automáticamente una vez confirmado el pago.</div></details>
+        <details class="reveal"><summary>¿Cómo solicito DEV Verificado?<span class="plus">+</span></summary><div class="ans">Mediante el formulario de postulación. Debes llevar mínimo 2 semanas en el servidor, tener experiencia real en desarrollo y no acumular sanciones.</div></details>
+        <details class="reveal"><summary>¿El Rol Cliente es reembolsable?<span class="plus">+</span></summary><div class="ans">No se realizan reembolsos una vez asignado el rol.</div></details>
+        <details class="reveal"><summary>¿Puedo compartir los recursos premium?<span class="plus">+</span></summary><div class="ans">No. Los recursos son de uso exclusivo del cliente: no se pueden compartir, redistribuir ni publicar.</div></details>
+        <details class="reveal"><summary>¿Qué tipo de contenido se permite?<span class="plus">+</span></summary><div class="ans">Desarrolladores es una comunidad SFW. Todos los miembros deben cumplir el reglamento y los Términos de Servicio de Discord.</div></details>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ================= CTA ================= -->
+  <section class="block">
+    <div class="wrap">
+      <div class="cta reveal">
+        <h2>¿Listo para unirte a Desarrolladores?</h2>
+        <p>Únete a la comunidad, aprende, comparte y consigue recursos premium para tus proyectos.</p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="https://discord.gg/TU-INVITE" target="_blank" rel="noopener">💬 Entrar al Discord</a>
+          <a class="btn btn-ghost" href="#reglamento">📜 Leer reglamento</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="fbrand">
+    <img src="logo.png" alt="Logo" onerror="this.style.display='none'" />
+    Desarrolladores
+  </div>
+  <div class="flinks">
+    <a href="#sobre">Sobre</a>
+    <a href="#servicios">Servicios</a>
+    <a href="#reglamento">Reglamento</a>
+    <a href="#cliente">Rol Cliente</a>
+    <a href="#dev">DEV Verificado</a>
+    <a href="#faq">FAQ</a>
+    <a href="https://discord.gg/TU-INVITE" target="_blank" rel="noopener">Discord</a>
+  </div>
+  <p>Comunidad y estudio de desarrollo · Recursos para Minecraft, webs y bots.</p>
+  <p class="fnote">© <span id="year"></span> Desarrolladores · Todos los derechos reservados.</p>
+</footer>
+
+<a class="to-top" href="#inicio" id="toTop" aria-label="Volver arriba">↑</a>
+
+<script>
+  // Año dinámico
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Nav scroll + sombra
+  const nav = document.getElementById('nav');
+  const toTop = document.getElementById('toTop');
+  const onScroll = () => {
+    const y = window.scrollY;
+    nav.classList.toggle('scrolled', y > 40);
+    toTop.classList.toggle('show', y > 600);
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // Menú móvil
+  const toggle = document.getElementById('navToggle');
+  const links = document.getElementById('navLinks');
+  toggle.addEventListener('click', () => links.classList.toggle('open'));
+  links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
+
+  // Reveal on scroll
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach((el, i) => {
+    el.style.transitionDelay = Math.min(i % 6 * 60, 300) + 'ms';
+    io.observe(el);
+  });
+
+  // Link activo según sección
+  const sections = [...document.querySelectorAll('section[id], main section[id]')];
+  const navAnchors = [...links.querySelectorAll('a')];
+  const spy = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navAnchors.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id));
+      }
+    });
+  }, { rootMargin: '-45% 0px -50% 0px' });
+  sections.forEach(s => spy.observe(s));
+</script>
+</body>
+</html>
